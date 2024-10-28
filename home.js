@@ -44,7 +44,7 @@ export default function App({ navigation }) {
                         width: 200,
                         marginVertical: 10,
                     }}
-                    onPress={() => console.log('aye')}
+                    onPress={() => navigation.navigate('Lista de Contatos')}
                 />
                 <Button
                     title="Cadastre-se"
