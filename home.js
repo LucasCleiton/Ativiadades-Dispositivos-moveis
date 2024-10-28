@@ -3,12 +3,13 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Avatar, Input, Button } from '@rneui/themed';
 
-export default function App() {
+
+export default function App({ navigation }) {
     return (
         <View style={styles.container}>
 
             <View>
-                <Text>Logo</Text>
+
                 <Avatar
                     size={60}
                     rounded
@@ -60,7 +61,19 @@ export default function App() {
                         width: 200,
                         marginVertical: 10,
                     }}
-                    onPress={() => console.log('aye')}
+                    onPress={() => navigation.navigate('Cadastro')}
+                />
+
+                <Button
+                    containerStyle={{
+                        width: 200,
+                        marginHorizontal: 50,
+                        marginVertical: 10,
+                    }}
+                    title="Esqueceu a senha"
+                    type="clear"
+                    titleStyle={{ color: 'black' }}
+                    onPress={() => navigation.navigate('Esqueceu a Senha')}
                 />
 
             </View>

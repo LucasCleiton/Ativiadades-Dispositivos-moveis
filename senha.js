@@ -8,12 +8,6 @@ export default function App() {
         <View style={styles.container}>
 
             <View>
-                <Text style={styles.fonts} h1>
-                    Esqueceu a senha
-                </Text>
-
-            </View>
-            <View>
 
                 <Text>Email</Text>
                 <Input
