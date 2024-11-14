@@ -26,6 +26,7 @@ export default function App() {
     try {
       const response = await fetch(`${BASE_URL}?key=${API_KEY}&city_name=${state}&format=json`);
       const data = await response.json();
+      console.log(data);  // Verifique a estrutura dos dados aqui
       if (data && data.results) {
         return data.results;
       } else {
@@ -37,18 +38,17 @@ export default function App() {
   }
 
   return (
-
-
     <View style={styles.container}>
       {/* Header  */}
-
       <View style={styles.header}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Ionicons name="location-outline" size={24} color="white" />
         </TouchableOpacity>
-        <Text style={styles.cityText}>{weatherData?.city}</Text>
+        <Text style={styles.cityText}>{weatherData?.city || "Cidade"}</Text>
         <Ionicons name="notifications-outline" size={24} color="white" />
       </View>
+
+      {/* Modal para seleção de estado */}
       <Modal visible={modalVisible} transparent={true} animationType="slide">
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
@@ -74,52 +74,39 @@ export default function App() {
         </View>
       </Modal>
 
+      {/* Exibição de dados climáticos */}
       <View style={styles.currentWeather}>
-
-
         <FontAwesome name="sun-o" size={80} color="yellow" />
-        <Text style={styles.temperatureText}>{weatherData?.temp}°C</Text>
-        <Text style={styles.weatherInfo}>{weatherData?.description}</Text>
+        <Text style={styles.temperatureText}>{weatherData?.temp || "--"}°C</Text>
+        <Text style={styles.weatherInfo}>{weatherData?.description || "Sem descrição"}</Text>
         <Text style={styles.minMaxText}>
-          Max.: {weatherData?.forecast[0].max}°C Min.: {weatherData?.forecast[0].min}°C
+          Max.: {weatherData?.forecast?.[0]?.max || "--"}°C Min.: {weatherData?.forecast?.[0]?.min || "--"}°C
         </Text>
         <View style={styles.weatherDetails}>
-          <Text style={styles.detailText}>Humidade: {weatherData?.humidity}%</Text>
-          <Text style={styles.detailText}>{weatherData?.wind_speedy}</Text>
+          <Text style={styles.detailText}>Humidade: {weatherData?.humidity || "--"}%</Text>
+          <Text style={styles.detailText}>{weatherData?.wind_speedy || "--"}</Text>
         </View>
       </View>
 
-
-      {/* Clima por hora  */}
-
+      {/* Clima por hora */}
       <View style={styles.forecastSection}>
-        <Text style={styles.sectionTitle}>Today {weatherData?.date}</Text>
-
-
+        <Text style={styles.sectionTitle}>Hoje {weatherData?.date || "--"}</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <View style={styles.hourlyForecast}>
-
-            <Text style={styles.forecastText}>{weatherData?.time}</Text>
-            <FontAwesome name="cloud" size={24} color="white" />
-            <Text style={styles.forecastText}>{weatherData?.temp}ºC</Text>
-
-          </View>
+          {/* Exemplo de previsões horárias. Substitua por dados reais se disponíveis */}
+          {[1, 2, 3, 4].map((hour) => (
+            <View key={hour} style={styles.hourlyForecast}>
+              <Text style={styles.forecastText}>{`Horário ${hour}`}</Text>
+              <FontAwesome name="cloud" size={24} color="white" />
+              <Text style={styles.forecastText}>{`${weatherData?.temp || "--"}ºC`}</Text>
+            </View>
+          ))}
         </ScrollView>
-
-
       </View>
 
-
-
-
-
-
-      {/* Clima por horas  */}
-      {/* Next forecast */}
+      {/* Previsão para os próximos dias */}
       <View style={styles.nextForecast}>
         <Text style={styles.sectionTitle}>Next Forecast</Text>
         {weatherData?.forecast?.slice(1).map((day, index) => (
-
           <View key={index} style={styles.dailyForecast}>
             <Text style={styles.forecastText}>{day.weekday}</Text>
             <FontAwesome name="cloud" size={24} color="white" />
@@ -127,7 +114,6 @@ export default function App() {
           </View>
         ))}
       </View>
-
     </View>
   );
 }
